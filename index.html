@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyecto PAEC - Planta</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
+        header { background-color: #2e7d32; color: white; padding: 2rem; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; }
+        h1 { margin: 0; font-size: 2.5rem; } /* AQUÍ APARECERÁ EL HOLA */
+        .info-planta { line-height: 1.6; margin-top: 20px; }
+        .status { color: #666; font-size: 0.8rem; text-align: center; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="titulo-planta">Cargando título...</h1>
+    </header>
+
+    <div class="container">
+        <div class="info-planta">
+            <h2>Información General</h2>
+            <p>Aquí puedes empezar a escribir sobre tu planta del proyecto PAEC...</p>
+            <ul>
+                <li><strong>Nombre científico:</strong> [Próximamente]</li>
+                <li><strong>Cuidados:</strong> [Próximamente]</li>
+            </ul>
+        </div>
+        <p class="status" id="estado">Conectando con API...</p>
+    </div>
+
+    <script>
+        function cargarDatos() {
+            fetch('http://localhost:3000/hola')
+                .then(res => res.json())
+                .then(data => {
+                    // Ponemos el "Hola" directamente en el título H1
+                    document.getElementById('titulo-planta').innerText = data.mensaje;
+                    document.getElementById('estado').innerText = "Conectado a la base de datos";
+                })
+                .catch(err => {
+                    document.getElementById('titulo-planta').innerText = "Error de conexión";
+                    document.getElementById('estado').innerText = "Asegúrate de que 'node index.js' esté corriendo";
+                });
+        }
+        cargarDatos();
+    </script>
+</body>
+</html>
