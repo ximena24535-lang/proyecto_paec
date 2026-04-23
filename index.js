@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-const supabaseUrl = 'https://poobrodvweyqbrmbbvuv.supabase.co';
+const supabaseUrl = 'https://supabase.com/dashboard/project/poobrodvweyqbrmbbvuv/settings/api-keys';
 const supabaseKey = 'sb_publishable_lXqRcmEYqhitIecJSb89aQ_YjOf_piN'; 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
