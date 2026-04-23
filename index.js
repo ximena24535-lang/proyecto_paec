@@ -11,16 +11,24 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // REVISA ESTA LÍNEA: Debe ser solo /hola
 app.get('/hola', async (req, res) => {
-  const { data, error } = await supabase.from('mensajes').select('contenido');
+    // Agregué .single() para que traiga solo un objeto, no una lista
+    const { data, error } = await supabase
+        .from('mensajes')
+        .select('contenido')
+        .limit(1)
+        .single(); 
 
-  if (error) return res.status(500).json({ error: error.message });
+    if (error) {
+        console.log("Error de Supabase:", error.message);
+        return res.status(500).json({ mensaje: "Error de conexión" });
+    }
 
-  if (data && data.length > 0) {
-    // Mandamos el mensaje que está en la base de datos
-    res.json({ mensaje: data[0].contenido });
-  } else {
-    res.json({ mensaje: "Base de datos vacía" });
-  }
+    if (data) {
+        // Ahora data es un objeto directo { contenido: "lavanda" }
+        res.json({ mensaje: data.contenido });
+    } else {
+        res.json({ mensaje: "Base de datos vacía" });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
